@@ -1,9 +1,11 @@
-## ----loaddata------------------------------------------------------------
+## Load the File after unzipping it
+##--***********************************----
 unzip(zipfile="activity.zip")
 data <- read.csv("activity.csv")
 
 
-## ------------------------------------------------------------------------
+##--***********************************----
+## Load the ggplot2 library
 library(ggplot2)
 total.steps <- tapply(data$steps, data$date, FUN=sum, na.rm=TRUE)
 qplot(total.steps, binwidth=1000, xlab="total number of steps taken each day")
@@ -11,7 +13,8 @@ mean(total.steps, na.rm=TRUE)
 median(total.steps, na.rm=TRUE)
 
 
-## ------------------------------------------------------------------------
+##--***********************************----
+## Load the ggplot2 library
 library(ggplot2)
 averages <- aggregate(x=list(steps=data$steps), by=list(interval=data$interval),
                       FUN=mean, na.rm=TRUE)
@@ -21,21 +24,22 @@ ggplot(data=averages, aes(x=interval, y=steps)) +
     ylab("average number of steps taken")
 
 
-## ------------------------------------------------------------------------
+##--***********************************----
 averages[which.max(averages$steps),]
 
 #interval    steps
 #104      835 206.1698
 
 
-## ----how_many_missing----------------------------------------------------
+##  how_many_missing
+##--***********************************----
 missing <- is.na(data$steps)
 # How many missing
 table(missing)
 #FALSE  TRUE 
 #15264  2304 
 
-## ------------------------------------------------------------------------
+##--***********************************----
 # Replace each missing value with the mean value of its 5-minute interval
 fill.value <- function(steps, interval) {
     filled <- NA
